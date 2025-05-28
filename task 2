@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Image Gallery</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="gallery-container">
+    <h2>Dynamic Image Gallery</h2>
+    <input type="text" id="imageUrl" placeholder="Enter image URL" />
+    <button onclick="addImage()">Add Image</button>
+    <div id="gallery"></div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
+
+css
+body {
+  font-family: Arial, sans-serif;
+  background-color: #f2f2f2;
+  padding: 20px;
+}
+
+.gallery-container {
+  max-width: 800px;
+  margin: auto;
+  background: #fff;
+  padding: 20px;
+  border-radius: 10px;
+  text-align: center;
+}
+
+#imageUrl {
+  width: 70%;
+  padding: 10px;
+  margin-bottom: 10px;
+}
+
+button {
+  padding: 10px 20px;
+  margin-left: 5px;
+  cursor: pointer;
+}
+
+#gallery {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+  gap: 15px;
+  margin-top: 20px;
+}
+
+.image-box {
+  position: relative;
+}
+
+.image-box img {
+  width: 100%;
+  border-radius: 8px;
+}
+
+.image-box button {
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  background: #ff4444;
+  color: white;
+  border: none;
+  padding: 5px 8px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+javascript
+
+function addImage() {
+  const url = document.getElementById("imageUrl").value.trim();
+  if (!url) {
+    alert("Please enter an image URL.");
+    return;
+  }
+
+  const gallery = document.getElementById("gallery");
+
+  const box = document.createElement("div");
+  box.className = "image-box";
+
+  const img = document.createElement("img");
+  img.src = url;
+  img.alt = "User added image";
+
+  const removeBtn = document.createElement("button");
+  removeBtn.textContent = "X";
+  removeBtn.onclick = () => box.remove();
+
+  box.appendChild(img);
+  box.appendChild(removeBtn);
+  gallery.appendChild(box);
+
+  document.getElementById("imageUrl").value = "";
+}
