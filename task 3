@@ -1,0 +1,132 @@
+html
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Responsive Quiz & API</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="container">
+    <h1>Responsive Quiz App</h1>
+
+    <!-- Responsive Box -->
+    <div class="responsive-box">Resize me!</div>
+
+    <!-- Quiz Section -->
+    <section class="quiz-section">
+      <h2>What is 2 + 2?</h2>
+      <div class="buttons">
+        <button onclick="checkAnswer(3)">3</button>
+        <button onclick="checkAnswer(4)">4</button>
+        <button onclick="checkAnswer(5)">5</button>
+      </div>
+      <p id="quiz-result"></p>
+    </section>
+
+    <!-- Joke API Section -->
+    <section class="joke-section">
+      <h2>Get a Random Joke</h2>
+      <button onclick="getJoke()">Get Joke</button>
+      <p id="joke-text"></p>
+    </section>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
+
+css
+
+body {
+  font-family: 'Segoe UI', sans-serif;
+  margin: 0;
+  padding: 20px;
+  background-color: #f4f4f4;
+  text-align: center;
+}
+
+.container {
+  max-width: 700px;
+  margin: auto;
+  background: white;
+  padding: 20px;
+  border-radius: 12px;
+  box-shadow: 0 0 12px rgba(0, 0, 0, 0.1);
+}
+
+h1 {
+  color: #333;
+}
+
+.responsive-box {
+  padding: 20px;
+  margin: 20px 0;
+  background-color: lightcoral;
+  color: white;
+  font-size: 24px;
+  transition: background-color 0.3s ease;
+}
+
+/* Tablet */
+@media (min-width: 600px) {
+  .responsive-box {
+    background-color: lightseagreen;
+    font-size: 28px;
+  }
+}
+
+/* Desktop */
+@media (min-width: 900px) {
+  .responsive-box {
+    background-color: lightblue;
+    font-size: 32px;
+  }
+}
+
+.quiz-section, .joke-section {
+  margin-top: 30px;
+}
+
+button {
+  margin: 10px;
+  padding: 10px 20px;
+  font-size: 16px;
+  border: none;
+  background-color: #0077cc;
+  color: white;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+button:hover {
+  background-color: #005fa3;
+}
+
+#quiz-result, #joke-text {
+  font-size: 18px;
+  margin-top: 15px;
+}
+
+java script
+
+// Quiz functionality
+function checkAnswer(answer) {
+  const result = document.getElementById('quiz-result');
+  if (answer === 4) {
+    result.textContent = "Correct!";
+    result.style.color = "green";
+  } else {
+    result.textContent = "Wrong! Try again.";
+    result.style.color = "red";
+  }
+}
+
+// Fetch Joke from API
+async function getJoke() {
+  const response = await fetch("https://official-joke-api.appspot.com/random_joke");
+  const data = await response.json();
+  document.getElementById("joke-text").textContent = ${data.setup} - ${data.punchline};
+}
